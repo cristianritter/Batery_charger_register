@@ -39,13 +39,15 @@ try:
         # Exemplo: Dividir os dados e armazenar em variáveis
         data_parts = serial_data.split(',')
         valor1 = float(data_parts[0])*(4.47/1024)
+        valor2 = float(data_parts[1])*(4.47/1024)
         print(valor1)
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Inserir dados no banco de dados
-        insert_query = sql.SQL("INSERT INTO tabela_dados (timestamp_col, tensao) VALUES ({}, {})").format(
+        insert_query = sql.SQL("INSERT INTO tabela_dados (timestamp_col, tensao_bat, tensao_fonte) VALUES ({}, {}, {})").format(
             sql.Literal(timestamp),
             sql.Literal(valor1),
+            sql.Literal(valor2),
         )
         cursor.execute(insert_query)
         conn.commit()
